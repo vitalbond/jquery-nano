@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQueryNano</title>
+
+	<script src="../build/jquery-nano.min.js"></script>
+
+	<style>
+		table {
+			border-collapse: collapse;
+			margin: auto;
+		}
+
+		td, th {
+			border: 1px solid #ccc;
+			padding: 5px;
+		}
+
+		.ok {
+			color: green;
+		}
+
+		.ok:after {
+			content: 'OK!';
+		}
+
+		.error {
+			color: red;
+		}
+
+		.error:after {
+			content: 'Error!';
+		}
+	</style>
+
+	<script>
+		function el(id) {
+			return document.getElementById(id);
+		}
+
+		function ok(id, cond = true) {
+			if (cond) {
+				const e = el(id);
+				e.classList.add('ok');
+				e.classList.remove('error');
+			}
+		}
+	</script>
+</head>
+<body>
+
+<table>
+	<tr>
+		<th>Test</th>
+		<th>Result</th>
+	<tr>
+		<td>$(document).ready(fn)</td>
+		<td id="res_ready" class="error">
+			<script>$(document).ready(() => { ok('res_ready'); })</script>
+		</td>
+	</tr>
+	<tr>
+		<td>$(fn)</td>
+		<td id="res_ready2" class="error">
+			<script>$(() => { ok('res_ready2'); })</script>
+		</td>
+	</tr>
+	<tr>
+		<td id="test_selectors">Selectors / .length<span /><span /><span /></td>
+		<td id="res_selectors" class="error">
+			<script>$(() => { ok('res_selectors', $('#test_selectors span').length === 3 && !$('#test_selectors div').length); })</script>
+		</td>
+	</tr>
+	<tr>
+		<td id="test_get">.get(n)<span class="first" /><span class="second" /><span /></td>
+		<td id="res_get" class="error">
+			<script>$(() => { ok('res_get', $('#test_get span').get(0).classList.contains('first') && $('#test_get span').get(1).classList.contains('second')); })</script>
+		</td>
+	</tr>
+	<tr><td colspan="2">Classes</td></tr>
+	<tr>
+		<td id="test_addclass">.addClass()<span></span><span></span></td>
+		<td id="res_addclass" class="error">
+			<script>$(() => {
+				$('#test_addclass span').addClass('test');
+				ok('res_addclass', document.querySelectorAll('#test_addclass span.test').length === 2);
+			})</script>
+		</td>
+	</tr>
+	<tr>
+		<td id="test_removeclass">.removeClass()<span class="test"></span><span class="test"></span></td>
+		<td id="res_removeclass" class="error">
+			<script>$(() => {
+				$('#test_removeclass span').removeClass('test');
+				ok('res_removeclass', document.querySelectorAll('#test_removeclass span.test').length === 0);
+			})</script>
+		</td>
+	</tr>
+	<tr>
+		<td id="test_toggleclass">.toggleClass()<span class="test"></span><span></span></td>
+		<td id="res_toggleclass" class="error">
+			<script>$(() => {
+				let res = true;
+				$('#test_toggleclass span').toggleClass('test');
+				res = res
+				  && !$('#test_toggleclass span').get(0).classList.contains('test')
+				  && $('#test_toggleclass span').get(1).classList.contains('test');
+				$('#test_toggleclass span').toggleClass('test', true);
+				res = res
+					&& $('#test_toggleclass span').get(0).classList.contains('test')
+					&& $('#test_toggleclass span').get(1).classList.contains('test');
+				$('#test_toggleclass span').toggleClass('test', false);
+				res = res
+					&& !$('#test_toggleclass span').get(0).classList.contains('test')
+					&& !$('#test_toggleclass span').get(1).classList.contains('test');
+				ok('res_toggleclass', res);
+			})</script>
+		</td>
+	</tr>
+	<tr>
+		<td id="test_hasclass">.hasClass()<span class="test test2"></span><span class="test"></span></td>
+		<td id="res_hasclass" class="error">
+			<script>$(() => {
+				ok('res_hasclass', $('#test_hasclass span').hasClass('test') && !$('#test_hasclass span').hasClass('test2'));
+			})</script>
+		</td>
+	</tr>
+</table>
+
+</body>
+</html>
