@@ -40,3 +40,9 @@ $('span').length
 #### .toggleClass(className [, state])
 #### .hasClass(className)
 
+#### .after(content)
+**content**  
+Type: htmlString or Element or Text or Array or jQueryNano
+#### .before(content)
+#### .append(content)
+#### .prepend(content)

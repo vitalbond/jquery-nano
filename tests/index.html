@@ -126,6 +126,86 @@
 			})</script>
 		</td>
 	</tr>
+	<tr>
+		<td id="test_after">.after(content)<div style="display: none;"><span class="span1"></span></div></td>
+		<td id="res_after" class="error">
+			<script>$(() => {
+				$('#test_after .span1').after('<span class="span2"></span>');
+				$('#test_after .span1').after('Text');
+				const el = document.createElement('span');
+				el.className = 'span3'
+				$('#test_after .span1').after(el);
+				$('#test_after .span1').after($('<span class="span4"></span>'));
+				ok(
+				  'res_after',
+				  $('#test_after span').get(1).classList.contains('span4')
+				  && $('#test_after span').get(2).classList.contains('span3')
+				  && $('#test_after span').get(3).classList.contains('span2')
+				  && $('#test_after div').get(0).innerText === 'Text'
+				);
+			})</script>
+		</td>
+	</tr>
+	<tr>
+		<td id="test_before">.before(content)<div style="display: none;"><span class="span1"></span></div></td>
+		<td id="res_before" class="error">
+			<script>$(() => {
+			$('#test_before .span1').before('<span class="span2"></span>');
+			$('#test_before .span1').before('Text');
+			const el = document.createElement('span');
+			el.className = 'span3'
+			$('#test_before .span1').before(el);
+			$('#test_before .span1').before($('<span class="span4"></span>'));
+			ok(
+				'res_before',
+				$('#test_before span').get(0).classList.contains('span2')
+				&& $('#test_before span').get(1).classList.contains('span3')
+				&& $('#test_before span').get(2).classList.contains('span4')
+				&& $('#test_before div').get(0).innerText === 'Text'
+			);
+		})</script>
+		</td>
+	</tr>
+	<tr>
+		<td id="test_append">.append(content)<div style="display: none;"><span class="span1"></span></div></td>
+		<td id="res_append" class="error">
+			<script>$(() => {
+				$('#test_append .span1').append('<span class="span2"></span>');
+				$('#test_append .span1').append('Text');
+				const el = document.createElement('span');
+				el.className = 'span3'
+				$('#test_append .span1').append(el);
+				$('#test_append .span1').append($('<span class="span4"></span>'));
+				ok(
+					'res_append',
+					$('#test_append .span1 span').get(0).classList.contains('span2')
+					&& $('#test_append .span1 span').get(1).classList.contains('span3')
+					&& $('#test_append .span1 span').get(2).classList.contains('span4')
+					&& $('#test_append .span1').get(0).innerText === 'Text'
+				);
+			})</script>
+		</td>
+	</tr>
+	<tr>
+		<td id="test_prepend">.append(content)<div style="display: none;"><span class="span1"></span></div></td>
+		<td id="res_prepend" class="error">
+			<script>$(() => {
+				$('#test_prepend .span1').prepend('<span class="span2"></span>');
+				$('#test_prepend .span1').prepend('Text');
+				const el = document.createElement('span');
+				el.className = 'span3'
+				$('#test_prepend .span1').prepend(el);
+				$('#test_prepend .span1').prepend($('<span class="span4"></span>'));
+				ok(
+					'res_prepend',
+					$('#test_prepend .span1 span').get(0).classList.contains('span4')
+					&& $('#test_prepend .span1 span').get(1).classList.contains('span3')
+					&& $('#test_prepend .span1 span').get(2).classList.contains('span2')
+					&& $('#test_prepend .span1').get(0).innerText === 'Text'
+				);
+			})</script>
+		</td>
+	</tr>
 </table>
 
 </body>
