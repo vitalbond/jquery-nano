@@ -54,6 +54,7 @@
 	<tr>
 		<th>Test</th>
 		<th>Result</th>
+	<tr><td colspan="2"><b>Core</b></td></tr>
 	<tr>
 		<td>$(document).ready(fn)</td>
 		<td id="res_ready" class="error">
@@ -72,13 +73,34 @@
 			<script>$(() => { ok('res_selectors', $('#test_selectors span').length === 3 && !$('#test_selectors div').length); })</script>
 		</td>
 	</tr>
+	<tr><td colspan="2"><b>Miscellaneous</b></td></tr>
 	<tr>
 		<td id="test_get">.get(n)<span class="first" /><span class="second" /><span /></td>
 		<td id="res_get" class="error">
 			<script>$(() => { ok('res_get', $('#test_get span').get(0).classList.contains('first') && $('#test_get span').get(1).classList.contains('second')); })</script>
 		</td>
 	</tr>
-	<tr><td colspan="2">Manipulations</td></tr>
+	<tr>
+		<td id="test_each">.each(fn)<span class="first" /><span class="second" /><span class="third" /></td>
+		<td id="res_each" class="error">
+			<script>$(() => {
+				$('#test_each span').each(function (i, el) { (this === el) && $(el).addClass('test-class').addClass('test-class-' + i); });
+				ok('res_each',
+				  $('#test_each span.test-class').length === 3
+				  && $('#test_each span.third').hasClass('test-class-2'));
+			})</script>
+		</td>
+	</tr>
+	<tr>
+		<td id="test_map">.map(fn)<span class="first"></span><span class="second"></span><span class="third"></span></td>
+		<td id="res_map" class="error">
+			<script>$(() => {
+				ok('res_map',
+					JSON.stringify($('#test_map span').map(function (i, el) { return (this === el) && el.getAttribute('class'); })) === JSON.stringify(['first', 'second', 'third']))
+			})</script>
+		</td>
+	</tr>
+	<tr><td colspan="2"><b>Manipulations</b></td></tr>
 	<tr>
 		<td id="test_addclass">.addClass()<span></span><span></span></td>
 		<td id="res_addclass" class="error">
@@ -245,6 +267,19 @@
 					&& $('#test_attr span').attr('data-value') === 'changed'
 					&& $('#test_attr span').removeAttr('data-value')
 					&& $('#test_attr span').attr('data-value') === null
+				);
+			})</script>
+		</td>
+	</tr>
+	<tr>
+		<td id="test_html">.html()<div style="display: none;"><span class="span1">test<br>test</span><span class="span2">test<br>test</span></div></td>
+		<td id="res_html" class="error">
+			<script>$(() => {
+				ok(
+					'res_html',
+					$('#test_html span').html() === 'test<br>testtest<br>test'
+					&& $('#test_html span').html('test<br>')
+					&& $('#test_html span').html() === 'test<br>test<br>'
 				);
 			})</script>
 		</td>

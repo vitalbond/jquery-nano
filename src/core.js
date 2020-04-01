@@ -27,17 +27,17 @@ const $ = (function () {
 		}
 
 		addClass(className) {
-			this.nodes.forEach(el => { el.classList.add(className); })
+			this.nodes.forEach(el => { el.classList.add(className); });
 			return this;
 		}
 
 		removeClass(className) {
-			this.nodes.forEach(el => { el.classList.remove(className); })
+			this.nodes.forEach(el => { el.classList.remove(className); });
 			return this;
 		}
 
 		toggleClass(className, toggle) {
-			this.nodes.forEach(el => { el.classList.toggle(className, toggle); })
+			this.nodes.forEach(el => { el.classList.toggle(className, toggle); });
 			return this;
 		}
 
@@ -108,6 +108,25 @@ const $ = (function () {
 		removeAttr(name) {
 			this.nodes.forEach(el => { el.removeAttribute(name); });
 			return this;
+		}
+
+		html(html) {
+			if (typeof html === 'undefined') {
+				return this.nodes.reduce((a, v) => a + v.innerHTML, '');
+			}
+
+			this.nodes.forEach(el => { el.innerHTML = html; });
+
+			return this;
+		}
+
+		each(fn) {
+			this.nodes.forEach((el, i) => { fn.call(el, i, el); });
+			return this;
+		}
+
+		map(fn) {
+			return this.nodes.map((el, i) => fn.call(el, i, el));
 		}
 	}
 

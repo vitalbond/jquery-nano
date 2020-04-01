@@ -27,11 +27,13 @@ $(function () {
 $('span')
 ```
 ```
-$('span').get(n)
-```
-```
 $('span').length
 ```
+
+### Miscellaneous
+#### $('span').get(n)
+#### $('span').each(fn)
+#### $('span').map(fn)
 
 ### Manipulations
 
@@ -49,3 +51,4 @@ Type: htmlString or Element or Text or Array or jQueryNano
 #### .text()
 #### .val()
 #### .attr()
+#### .html()
