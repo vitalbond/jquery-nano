@@ -1,3 +1,5 @@
+'use strict';
+
 const $ = (function () {
 	class A {
 		constructor(nodes) {
@@ -26,14 +28,17 @@ const $ = (function () {
 
 		addClass(className) {
 			this.nodes.forEach(el => { el.classList.add(className); })
+			return this;
 		}
 
 		removeClass(className) {
 			this.nodes.forEach(el => { el.classList.remove(className); })
+			return this;
 		}
 
 		toggleClass(className, toggle) {
 			this.nodes.forEach(el => { el.classList.toggle(className, toggle); })
+			return this;
 		}
 
 		hasClass(className) {
@@ -44,19 +49,19 @@ const $ = (function () {
 		}
 
 		after(content) {
-			this.manipulate(content, 'afterend', HTMLElement.prototype.after);
+			return this.manipulate(content, 'afterend', HTMLElement.prototype.after);
 		}
 
 		before(content) {
-			this.manipulate(content, 'beforebegin', HTMLElement.prototype.before);
+			return this.manipulate(content, 'beforebegin', HTMLElement.prototype.before);
 		}
 
 		append(content) {
-			this.manipulate(content, 'beforeend', HTMLElement.prototype.append);
+			return this.manipulate(content, 'beforeend', HTMLElement.prototype.append);
 		}
 
 		prepend(content) {
-			this.manipulate(content, 'afterbegin', HTMLElement.prototype.prepend);
+			return this.manipulate(content, 'afterbegin', HTMLElement.prototype.prepend);
 		}
 
 		manipulate(content, place, func) {
@@ -69,6 +74,40 @@ const $ = (function () {
 					func.call(el, content);
 				}
 			});
+
+			return this;
+		}
+
+		text() {
+			return this.nodes.reduce((a, v) => a + v.textContent, '');
+		}
+
+		val(value) {
+			if (typeof value === 'undefined') {
+				switch (this.nodes.length) {
+					case 0: return undefined;
+					case 1: return this.nodes[0].value;
+					default: return '';
+				}
+			}
+
+			this.nodes.forEach(el => { el.value = value; })
+
+			return this;
+		}
+
+		attr(name, value) {
+			if (typeof value === 'undefined') {
+				return this.nodes.length ? this.nodes[0].getAttribute(name) : undefined;
+			}
+
+			this.nodes.forEach(el => { el.setAttribute(name, value); });
+			return this;
+		}
+
+		removeAttr(name) {
+			this.nodes.forEach(el => { el.removeAttribute(name); });
+			return this;
 		}
 	}
 

@@ -78,7 +78,7 @@
 			<script>$(() => { ok('res_get', $('#test_get span').get(0).classList.contains('first') && $('#test_get span').get(1).classList.contains('second')); })</script>
 		</td>
 	</tr>
-	<tr><td colspan="2">Classes</td></tr>
+	<tr><td colspan="2">Manipulations</td></tr>
 	<tr>
 		<td id="test_addclass">.addClass()<span></span><span></span></td>
 		<td id="res_addclass" class="error">
@@ -187,7 +187,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td id="test_prepend">.append(content)<div style="display: none;"><span class="span1"></span></div></td>
+		<td id="test_prepend">.prepend(content)<div style="display: none;"><span class="span1"></span></div></td>
 		<td id="res_prepend" class="error">
 			<script>$(() => {
 				$('#test_prepend .span1').prepend('<span class="span2"></span>');
@@ -202,6 +202,49 @@
 					&& $('#test_prepend .span1 span').get(1).classList.contains('span3')
 					&& $('#test_prepend .span1 span').get(2).classList.contains('span2')
 					&& $('#test_prepend .span1').get(0).innerText === 'Text'
+				);
+			})</script>
+		</td>
+	</tr>
+	<tr>
+		<td id="test_text">.text()<div style="display: none;"><span class="span1">test</span></div></td>
+		<td id="res_text" class="error">
+			<script>$(() => {
+				ok(
+					'res_text',
+					$('#test_text .span1').text() === 'test'
+				);
+			})</script>
+		</td>
+	</tr>
+	<tr>
+		<td id="test_val">.val()<div style="display: none;"><input value="test" /><select><option value="1">1</option><option value="2" selected>2</option></select></div></td>
+		<td id="res_val" class="error">
+			<script>$(() => {
+				ok(
+					'res_val',
+					$('#test_val input').val() === 'test'
+				  	&& $('#test_val select').val() === '2'
+				    && $('#test_val input').val('changed')
+				  	&& $('#test_val input').val() === 'changed'
+					&& $('#test_val select').val('1')
+					&& $('#test_val select').val() === '1'
+				);
+			})</script>
+		</td>
+	</tr>
+	<tr>
+		<td id="test_attr">.attr()<div style="display: none;"><span data-value="test"></span></div></td>
+		<td id="res_attr" class="error">
+			<script>$(() => {
+				ok(
+					'res_attr',
+					$('#test_attr span').attr('data-value') === 'test'
+					&& $('#test_attr span').attr('data-no-value') === null
+					&& $('#test_attr span').attr('data-value', 'changed')
+					&& $('#test_attr span').attr('data-value') === 'changed'
+					&& $('#test_attr span').removeAttr('data-value')
+					&& $('#test_attr span').attr('data-value') === null
 				);
 			})</script>
 		</td>

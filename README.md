@@ -33,7 +33,7 @@ $('span').get(n)
 $('span').length
 ```
 
-### Elements
+### Manipulations
 
 #### .addClass(className)
 #### .removeClass(className)
@@ -46,3 +46,6 @@ Type: htmlString or Element or Text or Array or jQueryNano
 #### .before(content)
 #### .append(content)
 #### .prepend(content)
+#### .text()
+#### .val()
+#### .attr()
