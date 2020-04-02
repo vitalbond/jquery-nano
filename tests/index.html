@@ -340,6 +340,33 @@
 			})</script>
 		</td>
 	</tr>
+	<tr>
+		<td id="test_on">.on()<div style="display: none;"><div class="outer"><div class="inner inner1"><div class="inner inner2"></div></div></div></td>
+		<td id="res_on" class="error">
+			<script>$(() => {
+				let counterOuter = 0;
+				let counterInner = 0;
+				$('#test_on div.outer').on('click', function () {
+					counterOuter++;
+				});
+				$('#test_on div.outer').on('click', '.inner', function () {
+					counterInner++;
+				});
+
+				let event = document.createEvent('HTMLEvents');
+				event.initEvent('click', true, false);
+				$('#test_on .outer').get(0).dispatchEvent(event);
+				$('#test_on .inner1').get(0).dispatchEvent(event);
+				$('#test_on .inner2').get(0).dispatchEvent(event);
+
+				ok(
+					'res_on',
+					counterOuter === 3
+					&& counterInner === 2
+				);
+			})</script>
+		</td>
+	</tr>
 </table>
 
 </body>

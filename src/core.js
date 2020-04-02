@@ -158,6 +158,21 @@ const $ = (function () {
 			this.nodes.forEach(el => { nodes.push(...el.querySelectorAll(a)); });
 			return new A(nodes);
 		}
+
+		on(eventName, ...args) {
+			this.nodes.forEach(el => {
+				el.addEventListener(eventName, typeof args[0] === 'function' ? args[0] : function (e) {
+					for (let target = e.target; target && target !== this; target = target.parentNode) {
+						if (target.matches(args[0])) {
+							args[1].call(target, e);
+							break;
+						}
+					}
+				});
+			});
+
+			return this;
+		}
 	}
 
 	return function (a) {
