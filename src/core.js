@@ -128,6 +128,36 @@ const $ = (function () {
 		map(fn) {
 			return this.nodes.map((el, i) => fn.call(el, i, el));
 		}
+
+		show() {
+			this.nodes.forEach(el => { el.style.display = '' });
+			return this;
+		}
+
+		hide() {
+			this.nodes.forEach(el => { el.style.display = 'none' });
+			return this;
+		}
+
+		toggle(show) {
+			if (typeof show === 'undefined') {
+				this.nodes.forEach(el => { el.style.display = (el.style.display === 'none' ? '' : 'none'); });
+			} else {
+				show ? this.show() : this.hide();
+			}
+			return this;
+		}
+
+		focus() {
+			this.nodes[0] && this.nodes[0].focus();
+			return this;
+		}
+
+		find(a) {
+			const nodes = [];
+			this.nodes.forEach(el => { nodes.push(...el.querySelectorAll(a)); });
+			return new A(nodes);
+		}
 	}
 
 	return function (a) {

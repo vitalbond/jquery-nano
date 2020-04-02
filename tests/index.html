@@ -102,6 +102,33 @@
 	</tr>
 	<tr><td colspan="2"><b>Manipulations</b></td></tr>
 	<tr>
+		<td id="test_showhidetoggle">.hide()/.show()/.toggle()<div style="display: none;"></div></td>
+		<td id="res_showhidetoggle" class="error">
+			<script>$(() => {
+				ok(
+					'res_showhidetoggle',
+					$('#test_focus div').show()
+					&& $('#test_focus div').get(0).style.display === ''
+					&& $('#test_focus div').hide()
+					&& $('#test_focus div').get(0).style.display === 'none'
+
+					&& $('#test_focus div').toggle()
+					&& $('#test_focus div').get(0).style.display === ''
+					&& $('#test_focus div').toggle()
+					&& $('#test_focus div').get(0).style.display === 'none'
+					&& $('#test_focus div').toggle(true)
+					&& $('#test_focus div').get(0).style.display === ''
+					&& $('#test_focus div').toggle(true)
+					&& $('#test_focus div').get(0).style.display === ''
+					&& $('#test_focus div').toggle(false)
+					&& $('#test_focus div').get(0).style.display === 'none'
+					&& $('#test_focus div').toggle(false)
+					&& $('#test_focus div').get(0).style.display === 'none'
+				);
+			})</script>
+		</td>
+	</tr>
+	<tr>
 		<td id="test_addclass">.addClass()<span></span><span></span></td>
 		<td id="res_addclass" class="error">
 			<script>$(() => {
@@ -280,6 +307,35 @@
 					$('#test_html span').html() === 'test<br>testtest<br>test'
 					&& $('#test_html span').html('test<br>')
 					&& $('#test_html span').html() === 'test<br>test<br>'
+				);
+			})</script>
+		</td>
+	</tr>
+	<tr>
+		<td id="test_focus">.focus()<div style="display: none;"><input /></div></td>
+		<td id="res_focus" class="error">
+			<script>$(() => {
+				$('#test_focus div').show();
+				$('#test_focus input').focus();
+				ok(
+					'res_focus',
+					$('#test_focus input').get(0) === document.activeElement
+				);
+				$('#test_focus div').hide();
+			})</script>
+		</td>
+	</tr>
+	<tr>
+		<td id="test_find">.find()<div style="display: none;"><div class="outer"><div id="inner1" class="inner inner1"></div></div><div class="outer"><div class="inner inner2"></div></div><div class="outer"></div><div class="inner inner3"></div></div></td>
+		<td id="res_find" class="error">
+			<script>$(() => {
+				ok(
+					'res_find',
+					$('#test_find div.outer').find('div.inner').length === 2
+					&& $('#test_find div.outer').find('div.inner').addClass('add')
+					&& $('#test_find .inner1').hasClass('add')
+					&& $('#test_find .inner2').hasClass('add')
+					&& !$('#test_find .inner3').hasClass('add')
 				);
 			})</script>
 		</td>
