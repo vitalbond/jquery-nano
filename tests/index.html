@@ -326,7 +326,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td id="test_find">.find()<div style="display: none;"><div class="outer"><div id="inner1" class="inner inner1"></div></div><div class="outer"><div class="inner inner2"></div></div><div class="outer"></div><div class="inner inner3"></div></div></td>
+		<td id="test_find">.find()<div style="display: none;"><div class="outer"><div class="inner inner1"></div></div><div class="outer"><div class="inner inner2"></div></div><div class="outer"></div><div class="inner inner3"></div></div></td>
 		<td id="res_find" class="error">
 			<script>$(() => {
 				ok(
@@ -363,6 +363,42 @@
 					'res_on',
 					counterOuter === 3
 					&& counterInner === 2
+				);
+			})</script>
+		</td>
+	</tr>
+	<tr>
+		<td id="test_parent">.parent()<div style="display: none;"><div class="outer"><div class="inner inner1"></div><div class="inner inner2"></div></div></div></td>
+		<td id="res_parent" class="error">
+			<script>$(() => {
+				ok(
+					'res_parent',
+					$('#test_parent div.inner1').parent().hasClass('outer')
+					&& $('#test_parent div.inner').parent().length === 1
+				);
+			})</script>
+		</td>
+	</tr>
+	<tr>
+		<td id="test_parents">.parents()<div style="display: none;"><div class="outer"><div class="inner inner1"></div><div class="inner inner2"><div class="inner-level2"></div></div></div></td>
+		<td id="res_parents" class="error">
+			<script>$(() => {
+				ok(
+					'res_parents',
+					$('#test_parents div.inner-level2').parents('.outer').hasClass('outer')
+					&& $('#test_parents div.inner-level2').parents('.inner').hasClass('inner2')
+				);
+			})</script>
+		</td>
+	</tr>
+	<tr>
+		<td id="test_siblings">.siblings()<div style="display: none;"><div class="inner1"></div><div class="inner-not1"></div><div class="inner-not1"></div></div></td>
+		<td id="res_siblings" class="error">
+			<script>$(() => {
+				ok(
+					'res_siblings',
+					$('#test_siblings div.inner1').siblings().hasClass('inner-not1')
+					&& $('#test_siblings div.inner1').siblings().length === 2
 				);
 			})</script>
 		</td>

@@ -156,7 +156,7 @@ const $ = (function () {
 		find(a) {
 			const nodes = [];
 			this.nodes.forEach(el => { nodes.push(...el.querySelectorAll(a)); });
-			return new A(nodes);
+			return new A([...new Set(nodes)]);
 		}
 
 		on(eventName, ...args) {
@@ -172,6 +172,36 @@ const $ = (function () {
 			});
 
 			return this;
+		}
+
+		parent() {
+			return new A([...new Set(this.nodes.map(el => el.parentNode))]);
+		}
+
+		siblings() {
+			const nodes = [];
+
+			this.nodes.forEach(el => {
+					nodes.push(...Array.prototype.filter.call(el.parentNode.children, child => child !== el));
+			});
+
+			return new A(nodes);
+		}
+
+		parents(selector) {
+			const nodes = [];
+
+			this.nodes.forEach(el => {
+				let parent = el;
+				while (parent = parent.parentNode) {
+					if (parent.matches(selector)) {
+						nodes.push(parent);
+						break;
+					}
+				}
+			});
+
+			return new A([...new Set(nodes)]);
 		}
 	}
 
