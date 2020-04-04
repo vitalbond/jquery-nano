@@ -73,6 +73,20 @@
 			<script>$(() => { ok('res_selectors', $('#test_selectors span').length === 3 && !$('#test_selectors div').length); })</script>
 		</td>
 	</tr>
+	<tr><td colspan="2"><b>AJAX</b></td></tr>
+	<tr>
+		<td id="test_serialize">.serialize()<div style="display: none;"><form><input type="hidden" name="hidden" value="hidden" /><select name="select"><option value="1"></option><option value="2" selected></option></select></form></div></td>
+		<td id="res_serialize" class="error">
+			<script>
+				$(() => {
+					ok(
+						'res_serialize',
+						$('#test_serialize form').serialize() === 'hidden=hidden&select=2'
+					);
+				})
+			</script>
+		</td>
+	</tr>
 	<tr><td colspan="2"><b>Miscellaneous</b></td></tr>
 	<tr>
 		<td id="test_get">.get(n)<span class="first" /><span class="second" /><span /></td>

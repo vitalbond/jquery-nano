@@ -203,6 +203,10 @@ const $ = (function () {
 
 			return new A([...new Set(nodes)]);
 		}
+
+		serialize() {
+			return Array.from(new FormData(this.nodes[0]), e => e.map(encodeURIComponent).join('=')).join('&')
+		}
 	}
 
 	return function (a) {
