@@ -209,7 +209,7 @@ const $ = (function () {
 		}
 	}
 
-	return function (a) {
+	const $ =  function (a) {
 		let nodes = [];
 
 		if (typeof a === 'string') {
@@ -234,4 +234,70 @@ const $ = (function () {
 
 		return new A(nodes);
 	};
+
+	$.ajaxSetup = function (options) {
+		this.ajaxOptions = Object.assign({ headers: {} }, options);
+	};
+
+	$.ajax = function (params) {
+		params = Object.assign({method: 'get', dataType: 'html'}, params);
+		const headers = Object.assign({}, this.ajaxOptions.headers);
+		const isJson = params.dataType.toLowerCase() === 'json';
+
+		if (params.method.toLowerCase() === 'post') {
+			headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+		}
+		if (isJson) {
+			headers['Accept'] = 'application/json';
+		}
+
+		return new Promise(function (resolve, reject) {
+			const request = new XMLHttpRequest();
+
+			request.onload = function () {
+				if (this.status >= 200 && this.status < 400) {
+					resolve(isJson ? JSON.parse(this.response) : this.response);
+				} else {
+					if (isJson) {
+						request.responseJSON = JSON.parse(request.responseText);
+					}
+					reject(request);
+				}
+			};
+
+			request.onerror = function () {
+				reject(request);
+			};
+
+			if (params['method'].toLowerCase() === 'post') {
+				request.open('POST', params['url']);
+				Object.keys(headers).forEach(header => { request.setRequestHeader(header, headers[header]); });
+				request.send(params['data']);
+			} else {
+				request.open('GET',
+					params['url']
+					+ (
+						'data' in params
+							? '?' + Object.keys(params['data'])
+							.map(key => key + '=' + encodeURIComponent(params['data'][key]))
+							.join('&')
+							: ''
+					));
+				Object.keys(headers).forEach(header => { request.setRequestHeader(header, headers[header]); });
+				request.send();
+			}
+		});
+	};
+
+	$.debounce = function (callback, wait) {
+		let timeout = null;
+
+		return function() {
+			const next = () => callback.apply(this, arguments);
+			clearTimeout(timeout);
+			timeout = setTimeout(next, wait);
+		}
+	};
+
+	return $;
 })();
