@@ -164,7 +164,9 @@ const $ = (function () {
 				el.addEventListener(eventName, typeof args[0] === 'function' ? args[0] : function (e) {
 					for (let target = e.target; target && target !== this; target = target.parentNode) {
 						if (target.matches(args[0])) {
-							args[1].call(target, e);
+							if (args[1].call(target, e) === false) {
+								e.preventDefault();
+							}
 							break;
 						}
 					}
