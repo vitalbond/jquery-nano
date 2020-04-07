@@ -215,6 +215,18 @@ const $ = (function () {
 		serialize() {
 			return Array.from(new FormData(this.nodes[0]), e => e.map(encodeURIComponent).join('=')).join('&')
 		}
+
+		click(callback) {
+			return this.on('click', callback);
+		}
+
+		submit(callback) {
+			return this.on('submit', callback);
+		}
+
+		keyup(callback) {
+			return this.on('keyup', callback);
+		}
 	}
 
 	const $ =  function (a) {
