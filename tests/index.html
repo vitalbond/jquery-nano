@@ -406,6 +406,19 @@
 		</td>
 	</tr>
 	<tr>
+		<td id="test_filter">.filter()<div style="display: none;"><div class="inner inner1"></div><div class="inner inner2"><div class="inner inner2"></div></div></div></td>
+		<td id="res_filter" class="error">
+			<script>$(() => {
+				ok(
+					'res_filter',
+					$('#test_filter div.inner').length === 3
+					&& $('#test_filter div.inner').filter('.inner1').length === 1
+					&& $('#test_filter div.inner').filter('.inner2').length === 2
+				);
+			})</script>
+		</td>
+	</tr>
+	<tr>
 		<td id="test_siblings">.siblings()<div style="display: none;"><div class="inner1"></div><div class="inner-not1"></div><div class="inner-not1"></div></div></td>
 		<td id="res_siblings" class="error">
 			<script>$(() => {

@@ -204,6 +204,14 @@ const $ = (function () {
 			return new A([...new Set(nodes)]);
 		}
 
+		filter(a) {
+			if (typeof a === 'string') {
+				return new A(this.nodes.filter(el => el.matches(a)));
+			} else if (typeof a === 'function') {
+				return new A(this.nodes.filter(a));
+			}
+		}
+
 		serialize() {
 			return Array.from(new FormData(this.nodes[0]), e => e.map(encodeURIComponent).join('=')).join('&')
 		}
