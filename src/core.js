@@ -139,6 +139,11 @@ const $ = (function () {
 			return this;
 		}
 
+		remove() {
+			this.nodes.forEach(el => { if (el.parentNode) { el.parentNode.removeChild(el); } });
+			return this;
+		}
+
 		toggle(show) {
 			if (typeof show === 'undefined') {
 				this.nodes.forEach(el => { el.style.display = (el.style.display === 'none' ? '' : 'none'); });

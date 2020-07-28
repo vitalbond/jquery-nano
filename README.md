@@ -41,8 +41,8 @@ $('span').length
 #### .removeClass(className)
 #### .toggleClass(className [, state])
 #### .hasClass(className)
-
 #### .after(content)
+#### .remove()
 **content**  
 Type: htmlString or Element or Text or Array or jQueryNano
 #### .before(content)
