@@ -330,5 +330,17 @@ const $ = (function () {
 		}
 	};
 
+	$.throttle = function (callback, limit) {
+		let inThrottle = false;
+
+		return function() {
+			if (!inThrottle) {
+				callback.apply(this, arguments);
+				inThrottle = true;
+				setTimeout(() => inThrottle = false, limit)
+			}
+		}
+	};
+
 	return $;
 })();
